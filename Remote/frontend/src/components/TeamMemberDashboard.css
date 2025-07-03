@@ -1,0 +1,331 @@
+/* Team Member Dashboard Styles */
+.team-member-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Welcome Section */
+.welcome-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px 30px 40px 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.welcome-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.user-info h1 {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+}
+
+.user-info p {
+  font-size: 1.2rem;
+  color: #4a5568;
+  margin: 0 0 20px 0;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.role-badge.team-member {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.role-icon {
+  font-size: 1.1rem;
+}
+
+.current-time {
+  text-align: right;
+}
+
+.current-time .time {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 5px;
+}
+
+.current-time .date {
+  font-size: 1.1rem;
+  color: #4a5568;
+}
+
+/* Function Navigation */
+.function-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.nav-function-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  padding: 25px 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+.nav-function-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-color: #4facfe;
+}
+
+.nav-function-btn.timer-btn:hover {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  color: white;
+}
+
+.nav-function-btn.tasks-btn:hover {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: white;
+}
+
+.nav-function-btn.analytics-btn:hover {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.nav-function-btn.settings-btn:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.nav-icon {
+  font-size: 2.2rem;
+  min-width: 55px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.nav-content {
+  flex: 1;
+}
+
+.nav-content h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.nav-content p {
+  margin: 0;
+  font-size: 1rem;
+  color: #4a5568;
+}
+
+.nav-function-btn:hover .nav-content h3,
+.nav-function-btn:hover .nav-content p {
+  color: inherit;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+  max-width: 1200px;
+  margin: 20px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.overview-section,
+.performance-summary,
+.goals-summary {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+/* Performance Summary */
+.performance-summary h3,
+.goals-summary h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.4rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.summary-card:nth-child(1) {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.summary-card:nth-child(2) {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.summary-card:nth-child(3) {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.summary-card:nth-child(4) {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  color: #2d3748;
+}
+
+.summary-icon {
+  font-size: 2rem;
+}
+
+.summary-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.summary-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Goals Summary */
+.goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.goal-item {
+  background: #f7fafc;
+  border-radius: 10px;
+  padding: 20px;
+  border-left: 4px solid #4facfe;
+}
+
+.goal-text {
+  display: block;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 10px;
+}
+
+.goal-progress {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: #4a5568;
+  font-weight: 600;
+  min-width: 50px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .team-member-dashboard {
+    padding: 15px;
+  }
+
+  .welcome-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .user-info h1 {
+    font-size: 2rem;
+  }
+
+  .current-time .time {
+    font-size: 2rem;
+  }
+
+  .function-navigation {
+    flex-direction: column;
+    gap: 15px;
+    max-width: none;
+  }
+
+  .nav-function-btn {
+    padding: 20px 25px;
+  }
+
+  .summary-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .goal-progress {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .progress-text {
+    text-align: center;
+  }
+}
+
+/* Navigation Button Specific Styles */
+
+.screenshot-btn {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.screenshot-btn:hover {
+  box-shadow: 0 8px 25px rgba(237, 137, 54, 0.3);
+}

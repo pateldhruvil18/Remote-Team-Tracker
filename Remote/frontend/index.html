@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="Productivity Tracker - Monitor your work efficiency with task management, time tracking, and analytics"
+    />
+    <meta name="theme-color" content="#667eea" />
+    <title>Productivity Tracker</title>
+    <style>
+      /* Prevent flash of unstyled content */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+        background: #f8fafc;
+        overflow-x: hidden;
+      }
+
+      /* Loading screen to prevent layout shift */
+      #root {
+        min-height: 100vh;
+      }
+
+      /* Responsive font scaling */
+      @media (max-width: 1366px) {
+        html {
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        html {
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        html {
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

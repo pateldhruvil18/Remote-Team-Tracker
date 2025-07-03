@@ -1,0 +1,237 @@
+.task-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: grab;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.task-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.task-card.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  cursor: grabbing;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.task-priority {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.priority-icon {
+  font-size: 0.9rem;
+}
+
+.priority-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.task-card:hover .task-actions {
+  opacity: 1;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+  background: #f7fafc;
+}
+
+.action-btn.delete:hover {
+  background: #fed7d7;
+}
+
+.task-content {
+  margin-bottom: 1rem;
+}
+
+.task-title {
+  margin: 0 0 0.5rem 0;
+  color: #2d3748;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.task-description {
+  margin: 0;
+  color: #4a5568;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.task-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.task-tag {
+  background: #edf2f7;
+  color: #4a5568;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.task-progress {
+  margin-bottom: 1rem;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.progress-percentage {
+  font-size: 0.8rem;
+  color: #667eea;
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.task-due {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+.task-due.overdue {
+  color: #e53e3e;
+  font-weight: 600;
+}
+
+.due-icon {
+  font-size: 0.8rem;
+}
+
+.task-assignee {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.assignee-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.assignee-name {
+  font-size: 0.8rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.task-comments {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.75rem;
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+.comments-icon {
+  font-size: 0.8rem;
+}
+
+.comments-count {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .task-card {
+    padding: 0.75rem;
+  }
+  
+  .task-actions {
+    opacity: 1;
+  }
+  
+  .task-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .assignee-name {
+    display: none;
+  }
+}

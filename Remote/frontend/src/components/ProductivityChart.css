@@ -1,0 +1,175 @@
+.productivity-chart {
+  width: 100%;
+}
+
+.chart-header {
+  margin-bottom: 1.5rem;
+}
+
+.chart-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #718096;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.chart-container {
+  display: flex;
+  height: 300px;
+  margin-bottom: 1rem;
+}
+
+.chart-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 1rem;
+  width: 50px;
+}
+
+.y-axis-label {
+  font-size: 0.8rem;
+  color: #718096;
+  text-align: right;
+}
+
+.chart-content {
+  flex: 1;
+  position: relative;
+}
+
+.chart-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-line {
+  height: 1px;
+  background: #e2e8f0;
+  width: 100%;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: end;
+  height: 100%;
+  gap: 0.5rem;
+  padding: 0 0.25rem;
+}
+
+.bar-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.bar {
+  width: 100%;
+  max-width: 40px;
+  background: #667eea;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.25rem;
+}
+
+.bar:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+.bar-value {
+  font-size: 0.7rem;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.bar-label {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #4a5568;
+  font-weight: 500;
+  text-align: center;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  white-space: nowrap;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #4a5568;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .chart-stats {
+    gap: 1rem;
+  }
+  
+  .chart-container {
+    height: 250px;
+  }
+  
+  .chart-y-axis {
+    width: 40px;
+  }
+  
+  .bar-label {
+    font-size: 0.7rem;
+  }
+  
+  .chart-legend {
+    gap: 0.75rem;
+  }
+  
+  .legend-item {
+    font-size: 0.75rem;
+  }
+}

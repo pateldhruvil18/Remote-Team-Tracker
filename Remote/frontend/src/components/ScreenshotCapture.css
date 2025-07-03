@@ -1,0 +1,261 @@
+/* Screenshot Capture Component Styles */
+
+.screenshot-capture {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1.5rem;
+}
+
+.capture-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.capture-header h3 {
+  margin: 0;
+  color: #2d3748;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-active {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3);
+}
+
+.status-inactive {
+  background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+  color: white;
+}
+
+.status-unsupported {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  color: white;
+}
+
+.error-message {
+  background: #fed7d7;
+  border: 1px solid #feb2b2;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #c53030;
+}
+
+.error-message p {
+  margin: 0.25rem 0;
+}
+
+.capture-controls {
+  margin-bottom: 1.5rem;
+}
+
+.control-group {
+  margin-bottom: 1rem;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.control-group select {
+  width: 100%;
+  max-width: 200px;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  color: #2d3748;
+  font-size: 0.875rem;
+}
+
+.control-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.3);
+}
+
+.btn-danger:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245, 101, 101, 0.4);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(160, 174, 192, 0.3);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(160, 174, 192, 0.4);
+}
+
+.capture-info {
+  background: #f7fafc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.capture-instructions {
+  background: #edf2f7;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.capture-instructions h4 {
+  margin: 0 0 0.75rem 0;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.capture-instructions ul {
+  margin: 0 0 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.capture-instructions li {
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.privacy-note {
+  background: #e6fffa;
+  border: 1px solid #81e6d9;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-top: 1rem;
+}
+
+.privacy-note p {
+  margin: 0;
+  color: #234e52;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .screenshot-capture {
+    padding: 1rem;
+  }
+
+  .capture-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .control-group select {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .capture-instructions ul {
+    padding-left: 1rem;
+  }
+  
+  .capture-instructions li {
+    font-size: 0.875rem;
+  }
+}

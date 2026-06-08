@@ -1,6 +1,10 @@
 # 🚀 Team Tracker - Remote Productivity Management System
 
-A comprehensive full-stack MERN application for remote team productivity tracking with desktop companion app.
+[![Live App](https://img.shields.io/badge/Live%20App-Vercel-black?style=for-the-badge&logo=vercel)](https://remote-team-tracker-ccui.vercel.app)
+
+**Live Frontend Application URL:** [https://remote-team-tracker-ccui.vercel.app](https://remote-team-tracker-ccui.vercel.app)
+
+A comprehensive full-stack MERN application for remote team productivity tracking, featuring task management, Pomodoro timer, screenshot monitoring, and analytics.
 
 ## ✨ Features
 
@@ -120,9 +124,13 @@ For detailed setup, usage, and troubleshooting information, see the [docs](./doc
 
 ## 🌐 Application URLs
 
-When running locally:
+### 🌐 Live Production Deployments:
+- **Frontend App (Vercel)**: [https://remote-team-tracker-ccui.vercel.app](https://remote-team-tracker-ccui.vercel.app)
+- **Backend API (Render)**: `https://<your-backend-app>.onrender.com`
+- **Backend API Health Check**: `https://<your-backend-app>.onrender.com/health`
 
-- **Frontend**: http://localhost:3000
+### 💻 Local Development:
+- **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:5001
 - **API Health Check**: http://localhost:5001/health
 

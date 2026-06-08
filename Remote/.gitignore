@@ -93,8 +93,10 @@ build/
 */dist/
 
 # Uploads and screenshots
-uploads/
-screenshots/
+/uploads/
+/screenshots/
+/backend/uploads/
+/backend/screenshots/
 
 # Database
 *.db

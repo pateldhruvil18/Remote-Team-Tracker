@@ -1,93 +1,101 @@
 .task-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1rem;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  cursor: grab;
-  transition: all 0.3s ease;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.2s ease;
   position: relative;
+  border-left: 4px solid #008080;
 }
 
 .task-card:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 
-.task-card.dragging {
-  opacity: 0.5;
-  transform: rotate(5deg);
-  cursor: grabbing;
-}
-
-.task-header {
+.task-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 12px;
 }
 
 .task-priority {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.priority-icon {
-  font-size: 0.9rem;
-}
-
-.priority-text {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  text-transform: capitalize;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
 }
 
 .task-actions {
-  display: flex;
-  gap: 0.25rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.task-card:hover .task-actions {
-  opacity: 1;
+  position: relative;
 }
 
 .action-btn {
   background: none;
   border: none;
-  padding: 0.25rem;
-  border-radius: 4px;
+  font-size: 1.25rem;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.3s ease;
+  color: #666;
+  padding: 4px;
+  border-radius: 4px;
 }
 
 .action-btn:hover {
-  background: #f7fafc;
+  background-color: #f5f5f5;
 }
 
-.action-btn.delete:hover {
-  background: #fed7d7;
+.actions-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 120px;
+  overflow: hidden;
 }
 
-.task-content {
-  margin-bottom: 1rem;
+.actions-dropdown button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #333;
+}
+
+.actions-dropdown button:hover {
+  background-color: #f5f5f5;
+}
+
+.action-icon {
+  margin-right: 8px;
+}
+
+.task-card-content {
+  margin-bottom: 16px;
 }
 
 .task-title {
-  margin: 0 0 0.5rem 0;
-  color: #2d3748;
   font-size: 1rem;
   font-weight: 600;
-  line-height: 1.4;
+  margin: 0 0 8px 0;
+  color: #333;
 }
 
 .task-description {
+  font-size: 0.875rem;
+  color: #666;
   margin: 0;
-  color: #4a5568;
-  font-size: 0.85rem;
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -95,143 +103,101 @@
   overflow: hidden;
 }
 
-.task-tags {
+.task-card-footer {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.task-tag {
-  background: #edf2f7;
-  color: #4a5568;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
+  justify-content: space-between;
+  align-items: center;
   font-size: 0.75rem;
-  font-weight: 500;
 }
 
-.task-progress {
-  margin-bottom: 1rem;
-}
-
-.progress-info {
+.task-meta {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
+  gap: 12px;
 }
 
-.progress-text {
-  font-size: 0.8rem;
-  color: #4a5568;
-  font-weight: 500;
-}
-
-.progress-percentage {
-  font-size: 0.8rem;
-  color: #667eea;
-  font-weight: 600;
-}
-
-.progress-bar {
-  height: 4px;
-  background: #e2e8f0;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 2px;
-  transition: width 0.3s ease;
-}
-
-.task-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.task-due {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.8rem;
-  color: #718096;
-}
-
-.task-due.overdue {
-  color: #e53e3e;
-  font-weight: 600;
-}
-
-.due-icon {
-  font-size: 0.8rem;
-}
-
+.task-due-date,
 .task-assignee {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  color: #666;
 }
 
-.assignee-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
+.task-due-date.overdue {
+  color: #ff4757;
   font-weight: 600;
 }
 
-.assignee-name {
-  font-size: 0.8rem;
-  color: #4a5568;
-  font-weight: 500;
+.meta-icon {
+  margin-right: 4px;
 }
 
-.task-comments {
+.task-status-section {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  position: absolute;
-  bottom: 0.5rem;
-  right: 0.75rem;
-  font-size: 0.8rem;
-  color: #718096;
 }
 
-.comments-icon {
-  font-size: 0.8rem;
+.status-select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+  font-size: 0.75rem;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-.comments-count {
-  font-weight: 500;
+.task-created {
+  margin-top: 12px;
+  font-size: 0.7rem;
+  color: #999;
+  text-align: right;
 }
 
-@media (max-width: 768px) {
+.created-label {
+  margin-right: 4px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
   .task-card {
-    padding: 0.75rem;
+    background-color: #2a2a2a;
+    border-left-color: #006666;
   }
-  
-  .task-actions {
-    opacity: 1;
+
+  .task-title {
+    color: #e0e0e0;
   }
-  
-  .task-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+
+  .task-description {
+    color: #aaa;
   }
-  
-  .assignee-name {
-    display: none;
+
+  .action-btn {
+    color: #aaa;
+  }
+
+  .action-btn:hover {
+    background-color: #333;
+  }
+
+  .actions-dropdown {
+    background-color: #2a2a2a;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .actions-dropdown button {
+    color: #e0e0e0;
+  }
+
+  .actions-dropdown button:hover {
+    background-color: #333;
+  }
+
+  .task-due-date,
+  .task-assignee {
+    color: #aaa;
+  }
+
+  .task-created {
+    color: #777;
   }
 }

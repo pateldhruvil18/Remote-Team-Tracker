@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { User } = require("./models");
+const { User } = require("../api/models");
 require("dotenv").config();
 
 async function createManager() {
@@ -8,10 +8,20 @@ async function createManager() {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("📦 Connected to MongoDB");
 
+    const managerEmail = "dhp204600@gmail.com";
+    const managerPassword = "dhp@204600";
+
+    // Demote any other manager to team member
+    const demoted = await User.updateMany(
+      { role: "manager", email: { $ne: managerEmail } },
+      { role: "team_member" }
+    );
+    if (demoted.modifiedCount > 0) {
+      console.log(`🔄 Demoted ${demoted.modifiedCount} other manager(s) to team member`);
+    }
+
     // Check if user with this email already exists
-    const existingUser = await User.findOne({
-      email: "dhchaudhary973@gmail.com",
-    });
+    const existingUser = await User.findOne({ email: managerEmail });
     if (existingUser) {
       console.log(
         "👤 Found existing user:",
@@ -26,9 +36,11 @@ async function createManager() {
 
       existingUser.firstName = "Dhruvil";
       existingUser.lastName = "Patel";
-      existingUser.password = "dhp@973";
+      existingUser.password = managerPassword;
       existingUser.role = "manager";
       existingUser.isActive = true;
+      existingUser.isVerified = true;
+      existingUser.approvalStatus = "approved";
 
       await existingUser.save();
 
@@ -38,26 +50,16 @@ async function createManager() {
       console.log("🎯 Role:", existingUser.role);
       console.log("🆔 ID:", existingUser._id);
     } else {
-      // Check if any other manager exists and remove them
-      const existingManager = await User.findOne({ role: "manager" });
-      if (existingManager) {
-        console.log(
-          "⚠️  Removing existing manager:",
-          existingManager.firstName,
-          existingManager.lastName
-        );
-        await User.findByIdAndDelete(existingManager._id);
-        console.log("✅ Existing manager removed");
-      }
-
       // Create new manager
       const managerData = {
         firstName: "Dhruvil",
         lastName: "Patel",
-        email: "dhchaudhary973@gmail.com",
-        password: "dhp@973",
+        email: managerEmail,
+        password: managerPassword,
         role: "manager",
         isActive: true,
+        isVerified: true,
+        approvalStatus: "approved"
       };
 
       const manager = new User(managerData);
@@ -71,8 +73,8 @@ async function createManager() {
     }
 
     console.log("\n✅ You can now sign in with:");
-    console.log("📧 Email: dhchaudhary973@gmail.com");
-    console.log("🔒 Password: dhp@973");
+    console.log(`📧 Email: ${managerEmail}`);
+    console.log(`🔒 Password: ${managerPassword}`);
     console.log("🎯 Role: Manager");
   } catch (error) {
     console.error("❌ Error creating manager:", error.message);

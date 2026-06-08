@@ -9,21 +9,20 @@ const {
   generalLimiter,
   sanitizeInput,
   securityLogger,
-} = require("./middleware/security");
+} = require("./api/middleware/security");
 
 // Import routes
-const authRoutes = require("./routes/auth");
-const taskRoutes = require("./routes/tasks");
-const screenshotRoutes = require("./routes/screenshots");
-const managerApprovalRoutes = require("./routes/managerApproval");
-const emailRoutes = require("./routes/email");
-const databaseRoutes = require("./routes/database");
+const authRoutes = require("./api/routes/auth");
+const taskRoutes = require("./api/routes/tasks");
+const screenshotRoutes = require("./api/routes/screenshots");
+const managerApprovalRoutes = require("./api/routes/managerApproval");
+const emailRoutes = require("./api/routes/email");
+const databaseRoutes = require("./api/routes/database");
+const timeEntryRoutes = require("./api/routes/timeEntries");
+const analyticsRoutes = require("./api/routes/analytics");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-
-// Connect to database
-connectDB();
 
 // Security middleware
 app.use(securityHeaders);
@@ -56,6 +55,8 @@ app.use("/api/screenshots", screenshotRoutes);
 app.use("/api/manager", managerApprovalRoutes);
 app.use("/api/email", emailRoutes);
 app.use("/api/database", databaseRoutes);
+app.use("/api/time-entries", timeEntryRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 // Basic API info endpoint
 app.get("/api", (req, res) => {
@@ -82,38 +83,23 @@ app.use("*", (req, res) => {
 app.use((error, req, res, next) => {
   console.error("Global error handler:", error);
 
-  // CORS error
   if (error.message === "Not allowed by CORS") {
-    return res.status(403).json({
-      success: false,
-      message: "CORS policy violation",
-    });
+    return res.status(403).json({ success: false, message: "CORS policy violation" });
   }
 
-  // Mongoose validation error
   if (error.name === "ValidationError") {
     const errors = Object.values(error.errors).map((err) => ({
       field: err.path,
       message: err.message,
     }));
-
-    return res.status(400).json({
-      success: false,
-      message: "Validation failed",
-      errors,
-    });
+    return res.status(400).json({ success: false, message: "Validation failed", errors });
   }
 
-  // Mongoose duplicate key error
   if (error.code === 11000) {
     const field = Object.keys(error.keyValue)[0];
-    return res.status(400).json({
-      success: false,
-      message: `${field} already exists`,
-    });
+    return res.status(400).json({ success: false, message: `${field} already exists` });
   }
 
-  // Default error response
   res.status(500).json({
     success: false,
     message: "Internal server error",
@@ -121,12 +107,22 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📊 Environment: ${process.env.NODE_ENV || "development"}`);
-  console.log(`🔗 API URL: http://localhost:${PORT}/api`);
-  console.log(`❤️  Health check: http://localhost:${PORT}/health`);
-});
+// Start server ONLY after successful DB connection
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`📊 Environment: ${process.env.NODE_ENV || "development"}`);
+      console.log(`🔗 API URL: http://localhost:${PORT}/api`);
+      console.log(`❤️  Health check: http://localhost:${PORT}/health`);
+    });
+  } catch (err) {
+    console.error("❌ Failed to start server:", err.message);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 module.exports = app;

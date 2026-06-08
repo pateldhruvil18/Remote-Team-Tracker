@@ -1,129 +1,80 @@
-import { useState, useEffect } from 'react';
-import './TaskModal.css';
+import { useState, useEffect } from "react";
+import { useAuth } from "../store/AuthContext";
+import "./TaskModal.css";
 
-const TaskModal = ({ task, onSave, onClose }) => {
+const TaskModal = ({ isOpen, onClose, task, onSave, mode = "create", teamMembers = [] }) => {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    priority: 'medium',
-    status: 'todo',
-    estimatedHours: '',
-    dueDate: '',
-    tags: []
+    title: "",
+    description: "",
+    priority: "medium",
+    dueDate: "",
+    status: "todo",
+    assignedTo: user?._id || "",
   });
-  const [tagInput, setTagInput] = useState('');
-  const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (task) {
+    if (task && mode === "edit") {
+      let assigneeId = "";
+      if (task.assignee) {
+        assigneeId = typeof task.assignee === "object" ? task.assignee._id : task.assignee;
+      } else if (task.assignedTo) {
+        assigneeId = task.assignedTo;
+      }
+
       setFormData({
-        title: task.title || '',
-        description: task.description || '',
-        priority: task.priority || 'medium',
-        status: task.status || 'todo',
-        estimatedHours: task.estimatedHours || '',
-        dueDate: task.dueDate ? task.dueDate.split('T')[0] : '',
-        tags: task.tags || []
+        title: task.title || "",
+        description: task.description || "",
+        priority: task.priority || "medium",
+        dueDate: task.dueDate ? new Date(task.dueDate).toISOString().split("T")[0] : "",
+        status: task.status || "todo",
+        assignedTo: assigneeId || user?._id || "",
+      });
+    } else {
+      // Reset form for create mode
+      setFormData({
+        title: "",
+        description: "",
+        priority: "medium",
+        dueDate: "",
+        status: "todo",
+        assignedTo: user?._id || "",
       });
     }
-  }, [task]);
+  }, [task, mode, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  };
-
-  const handleAddTag = (e) => {
-    e.preventDefault();
-    if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        tags: [...prev.tags, tagInput.trim()]
-      }));
-      setTagInput('');
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove) => {
-    setFormData(prev => ({
-      ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.title.trim()) {
-      newErrors.title = 'Title is required';
-    } else if (formData.title.length < 3) {
-      newErrors.title = 'Title must be at least 3 characters';
-    }
-    
-    if (formData.estimatedHours && (isNaN(formData.estimatedHours) || formData.estimatedHours < 0)) {
-      newErrors.estimatedHours = 'Estimated hours must be a positive number';
-    }
-    
-    if (formData.dueDate) {
-      const dueDate = new Date(formData.dueDate);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      
-      if (dueDate < today) {
-        newErrors.dueDate = 'Due date cannot be in the past';
-      }
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
-    const taskData = {
-      ...formData,
-      estimatedHours: formData.estimatedHours ? parseFloat(formData.estimatedHours) : null,
-      dueDate: formData.dueDate || null
-    };
-    
-    onSave(taskData);
+    onSave(formData, mode);
+    onClose();
   };
 
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+  if (!isOpen) return null;
 
   return (
-    <div className="task-modal-overlay" onClick={handleBackdropClick}>
+    <div className="task-modal-overlay">
       <div className="task-modal">
-        <div className="modal-header">
-          <h2>{task ? 'Edit Task' : 'Create New Task'}</h2>
-          <button className="close-btn" onClick={onClose}>
-            ✕
+        <div className="task-modal-header">
+          <h2>{mode === "create" ? "Create New Task" : "Edit Task"}</h2>
+          <button className="close-button" onClick={onClose}>
+            &times;
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="modal-form">
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="title">Title *</label>
+            <label htmlFor="title">
+              <span className="label-icon">📝</span>
+              Task Title
+            </label>
             <input
               type="text"
               id="title"
@@ -131,129 +82,112 @@ const TaskModal = ({ task, onSave, onClose }) => {
               value={formData.title}
               onChange={handleChange}
               placeholder="Enter task title"
-              className={errors.title ? 'error' : ''}
+              required
+              className="form-input"
             />
-            {errors.title && <span className="error-text">{errors.title}</span>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">
+              <span className="label-icon">📋</span>
+              Description
+            </label>
             <textarea
               id="description"
               name="description"
               value={formData.description}
               onChange={handleChange}
               placeholder="Enter task description"
-              rows={4}
+              className="form-textarea"
+              rows="4"
             />
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="priority">Priority</label>
+              <label htmlFor="priority">
+                <span className="label-icon">🚩</span>
+                Priority
+              </label>
               <select
                 id="priority"
                 name="priority"
                 value={formData.priority}
                 onChange={handleChange}
+                className="form-select"
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
-                <option value="urgent">Urgent</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="status">Status</label>
-              <select
-                id="status"
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-              >
-                <option value="todo">To Do</option>
-                <option value="in_progress">In Progress</option>
-                <option value="review">Review</option>
-                <option value="done">Done</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="estimatedHours">Estimated Hours</label>
-              <input
-                type="number"
-                id="estimatedHours"
-                name="estimatedHours"
-                value={formData.estimatedHours}
-                onChange={handleChange}
-                placeholder="0"
-                min="0"
-                step="0.5"
-                className={errors.estimatedHours ? 'error' : ''}
-              />
-              {errors.estimatedHours && <span className="error-text">{errors.estimatedHours}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="dueDate">Due Date</label>
+              <label htmlFor="dueDate">
+                <span className="label-icon">📅</span>
+                Due Date
+              </label>
               <input
                 type="date"
                 id="dueDate"
                 name="dueDate"
                 value={formData.dueDate}
                 onChange={handleChange}
-                className={errors.dueDate ? 'error' : ''}
+                className="form-input"
               />
-              {errors.dueDate && <span className="error-text">{errors.dueDate}</span>}
             </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="tags">Tags</label>
-            <div className="tags-input">
-              <input
-                type="text"
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-                placeholder="Add a tag and press Enter"
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    handleAddTag(e);
-                  }
-                }}
-              />
-              <button type="button" onClick={handleAddTag} className="add-tag-btn">
-                Add
-              </button>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="status">
+                <span className="label-icon">🔄</span>
+                Status
+              </label>
+              <select
+                id="status"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="form-select"
+              >
+                <option value="todo">To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="review">Review</option>
+                <option value="completed">Completed</option>
+              </select>
             </div>
-            
-            {formData.tags.length > 0 && (
-              <div className="tags-list">
-                {formData.tags.map((tag, index) => (
-                  <span key={index} className="tag-item">
-                    {tag}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveTag(tag)}
-                      className="remove-tag-btn"
-                    >
-                      ✕
-                    </button>
-                  </span>
-                ))}
+
+            {user?.role === "manager" && (
+              <div className="form-group">
+                <label htmlFor="assignedTo">
+                  <span className="label-icon">👤</span>
+                  Assign To
+                </label>
+                <select
+                  id="assignedTo"
+                  name="assignedTo"
+                  value={formData.assignedTo}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="">Select Team Member</option>
+                  {teamMembers.map((member) => (
+                    <option key={member._id} value={member._id}>
+                      {member.firstName} {member.lastName}
+                    </option>
+                  ))}
+                </select>
               </div>
             )}
           </div>
 
-          <div className="modal-actions">
-            <button type="button" onClick={onClose} className="cancel-btn">
+          <div className="form-actions">
+            <button type="button" className="cancel-btn" onClick={onClose}>
               Cancel
             </button>
             <button type="submit" className="save-btn">
-              {task ? 'Update Task' : 'Create Task'}
+              {mode === "create" ? "Create Task" : "Save Changes"}
             </button>
           </div>
         </form>

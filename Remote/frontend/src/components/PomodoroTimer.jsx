@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
+import { useAuth } from '../store/AuthContext';
 import './PomodoroTimer.css';
 
 const PomodoroTimer = () => {
+  const { user } = useAuth();
   const [timeLeft, setTimeLeft] = useState(25 * 60); // 25 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState('work'); // 'work', 'shortBreak', 'longBreak'
@@ -13,6 +15,15 @@ const PomodoroTimer = () => {
     shortBreak: { duration: 5 * 60, label: 'Short Break', color: '#48bb78' },
     longBreak: { duration: 15 * 60, label: 'Long Break', color: '#ed8936' }
   };
+
+  useEffect(() => {
+    if (user?._id) {
+      const saved = localStorage.getItem(`pomodoro_sessions_${user._id}`);
+      if (saved) {
+        setSessions(parseInt(saved));
+      }
+    }
+  }, [user]);
 
   useEffect(() => {
     if (isActive && timeLeft > 0) {
@@ -40,9 +51,39 @@ const PomodoroTimer = () => {
     }
 
     if (mode === 'work') {
-      setSessions(prev => prev + 1);
+      const nextSessions = sessions + 1;
+      setSessions(nextSessions);
+      if (user?._id) {
+        localStorage.setItem(`pomodoro_sessions_${user._id}`, nextSessions.toString());
+        localStorage.setItem(`focus_time_${user._id}`, (nextSessions * 25 / 60).toFixed(1));
+
+        // Save to MongoDB via backend
+        const token = localStorage.getItem("token");
+        if (token) {
+          fetch(`${import.meta.env.VITE_API_URL}/time-entries`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              type: "pomodoro",
+              startTime: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
+              endTime: new Date().toISOString(),
+              pomodoroSession: {
+                sessionNumber: nextSessions,
+                completed: true
+              },
+              productivity: {
+                score: 100,
+                focusTime: 25 * 60 * 1000
+              }
+            })
+          }).catch(err => console.error("Error saving pomodoro entry:", err));
+        }
+      }
       // After 4 work sessions, take a long break
-      const nextMode = (sessions + 1) % 4 === 0 ? 'longBreak' : 'shortBreak';
+      const nextMode = nextSessions % 4 === 0 ? 'longBreak' : 'shortBreak';
       setMode(nextMode);
       setTimeLeft(modes[nextMode].duration);
     } else {

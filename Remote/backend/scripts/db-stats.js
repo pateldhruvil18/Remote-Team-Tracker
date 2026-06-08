@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 // Import User model
-const User = require('../models/User');
+const User = require('../api/models/User');
 
 /**
  * Script to show database statistics
